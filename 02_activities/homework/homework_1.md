@@ -76,3 +76,13 @@ Please do not pick the exact same tables that I have already diagramed. For exam
 	-  ![01_farmers_market_conceptual_model.png](./images/01_farmers_market_conceptual_model.png)
 - The column names can be found in a few spots (DB Schema window in the bottom right, the Database Structure tab in the main window by expanding each table entry, at the top of the Browse Data tab in the main window)
 
+
+
+Homework 1:
+- I have attached an image of my logical model  
+- I connected the customer table to the customer_purchases table on customer_id  
+- In the relationship, customer table is one, customer_purchases is many/infinity  
+
+![image](https://github.com/user-attachments/assets/570e0caf-4a2f-4134-8378-9c9ae45074f6)
+
+
