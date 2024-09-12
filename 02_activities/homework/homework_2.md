@@ -9,15 +9,15 @@
 2. Write a query that displays all of the columns and 10 rows from the customer table, sorted by customer_last_name, then customer_first_ name.
 
 ### ANSWER:
--- return all the columns from customer
-SELECT *
-FROM customer as c
+-- return all the columns from customer  
+SELECT *  
+FROM customer as c  
 
--- all columns, with 10 rows from customer, sorted by last name then first name
-SELECT *
-FROM customer
-ORDER BY customer_last_name, customer_first_name
-LIMIT 10
+-- all columns, with 10 rows from customer, sorted by last name then first name  
+SELECT *  
+FROM customer  
+ORDER BY customer_last_name, customer_first_name  
+LIMIT 10  
 
 
 # WHERE
@@ -28,16 +28,16 @@ LIMIT 10
 
 
 ### ANSWER:
---return all customers purcahses of product id 4 and 9
-SELECT *
-FROM customer_purchases
-WHERE product_id IN (4,9)
+-- return all customers purcahses of product id 4 and 9  
+SELECT *  
+FROM customer_purchases  
+WHERE product_id IN (4,9)  
 
--- all customer purchases and new column price (quantity * cost_to_customer_per_qty)
--- filter vendor ids for 8 to and including 10
-SELECT *, (quantity * cost_to_customer_per_qty) as [price]
-FROM customer_purchases
-WHERE vendor_id BETWEEN 8 AND 10
+-- all customer purchases and new column price (quantity * cost_to_customer_per_qty)  
+-- filter vendor ids for 8 to and including 10  
+SELECT *, (quantity * cost_to_customer_per_qty) as [price]  
+FROM customer_purchases  
+WHERE vendor_id BETWEEN 8 AND 10  
 
 
 
@@ -48,28 +48,28 @@ WHERE vendor_id BETWEEN 8 AND 10
 
 
 ### ANSWER:
---output product_id and product_name, add column prod_qty_type_condensed and displays unit 
--- if product_qty_type is unit or else display bulk
-SELECT product_id, product_name, 
-	CASE WHEN product_qty_type = 'unit'
-		THEN 'unit'
-	ELSE 'bulk'
-	END AS [prod_qty_type_condensed]
-FROM product
+-- output product_id and product_name, add column prod_qty_type_condensed and displays unit   
+-- if product_qty_type is unit or else display bulk  
+SELECT product_id, product_name,   
+	CASE WHEN product_qty_type = 'unit'  
+		THEN 'unit'  
+	ELSE 'bulk'  
+	END AS [prod_qty_type_condensed]  
+FROM product  
 
---flag pepper products sold at market
--- add column to previous query "pepper_flag", 1 if product_name contains pepper
--- else, output 0
-SELECT product_id, product_name, 
-	CASE WHEN product_qty_type = 'unit'
-		THEN 'unit'
-	ELSE 'bulk'
-	END AS [prod_qty_type_condensed],
-	CASE WHEN product_name LIKE '%pepper%'
-		THEN 1
-	ELSE 0
-	END AS [pepper_flag]
-FROM product
+-- flag pepper products sold at market  
+-- add column to previous query "pepper_flag", 1 if product_name contains pepper  
+-- else, output 0  
+SELECT product_id, product_name,   
+	CASE WHEN product_qty_type = 'unit'  
+		THEN 'unit'  
+	ELSE 'bulk'  
+	END AS [prod_qty_type_condensed],  
+	CASE WHEN product_name LIKE '%pepper%'  
+		THEN 1  
+	ELSE 0  
+	END AS [pepper_flag]  
+FROM product  
 
 
 
@@ -78,10 +78,10 @@ FROM product
 
 
 ### ANSWER:
--- inner join vendor to vendor_booth_assignments on vendor_id
--- sort results by vendor_name and then market date
-SELECT *
-FROM vendor_booth_assignments AS vba
-INNER JOIN vendor AS v
-	ON vba.vendor_id = v.vendor_id
-ORDER BY vendor_name, market_date
+-- inner join vendor to vendor_booth_assignments on vendor_id  
+-- sort results by vendor_name and then market date  
+SELECT *  
+FROM vendor_booth_assignments AS vba  
+INNER JOIN vendor AS v  
+	ON vba.vendor_id = v.vendor_id  
+ORDER BY vendor_name, market_date  
