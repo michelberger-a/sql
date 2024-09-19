@@ -17,6 +17,12 @@ The `||` values concatenate the columns into strings.
 Edit the appropriate columns -- you're making two edits -- and the NULL rows will be fixed. 
 All the other rows will remain the same.) */
 
+-- we need to coalesce the product_size and product_qty_type columns
+-- coalesce so size returns a blank '' for null
+-- coalesce so qty type returns 'unit' for null
+SELECT 
+product_name || ', ' || COALESCE(product_size, '') || ' (' || COALESCE(product_qty_type, 'unit') || ')'
+FROM product;
 
 
 
@@ -30,15 +36,57 @@ each new market date for each customer, or select only the unique market dates p
 (without purchase details) and number those visits. 
 HINT: One of these approaches uses ROW_NUMBER() and one uses DENSE_RANK(). */
 
+-- unique number of days visited
+-- using row_number() technique
+SELECT market_date
+, customer_id
+, ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY market_date ASC) as visit_num 
+FROM customer_purchases
+GROUP BY customer_id, market_date;
+
+-- unique number of visits
+-- using dense_rank() technique to count number of market days
+SELECT *
+, DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY market_date ASC) as visit_num_dense
+FROM customer_purchases;
 
 /* 2. Reverse the numbering of the query from a part so each customer’s most recent visit is labeled 1, 
 then write another query that uses this one as a subquery (or temp table) and filters the results to 
 only the customer’s most recent visit. */
 
 
+-- select all the available columns to see our data
+SELECT * 
+FROM(
+
+-- unique number of days visited
+-- changed order by to desc to get most recent visits first
+SELECT market_date
+, customer_id
+, ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY market_date DESC) as visit_num 
+FROM customer_purchases
+GROUP BY customer_id, market_date
+) as step1
+
+-- filters for the most recent visit
+WHERE visit_num = 1;
+
+
 /* 3. Using a COUNT() window function, include a value along with each row of the 
 customer_purchases table that indicates how many different times that customer has purchased that product_id. */
 
+
+-- some numbers will likely double count because customers purchased the same product
+-- more than once in a single market date
+
+SELECT *
+, COUNT() OVER(PARTITION BY customer_id, product_id ORDER BY product_id ASC, market_date ASC) as num_times_purchased
+FROM 
+(
+SELECT *
+, DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY market_date ASC) as visit_num_dense
+FROM customer_purchases
+) as step1
 
 
 
@@ -54,9 +102,17 @@ Remove any trailing or leading whitespaces. Don't just use a case statement for 
 
 Hint: you might need to use INSTR(product_name,'-') to find the hyphens. INSTR will help split the column. */
 
+-- use instr to find the index place of the -
+-- use the index in the substr as the start of the string retrieval
+-- ltrim and rtrim for whitespace cleaning
+SELECT *
+, CASE WHEN	
+	INSTR(product_name, '-') = 0 THEN NULL --if a - can't be found, INSTR returns 0
+	ELSE
+	LTRIM(RTRIM(SUBSTR(product_name, INSTR(product_name, '-')+1 )))
+	END	as [description]
+FROM product;
 
-
-/* 2. Filter the query to show any product_size value that contain a number with REGEXP. */
 
 
 
@@ -72,4 +128,36 @@ with a UNION binding them. */
 
 
 
+-- CTE 1: calculate spend by customer for each visit
+WITH sales_per_customer as (
+SELECT *
+, quantity * cost_to_customer_per_qty as sales_value
+FROM customer_purchases
+)
 
+-- CTE 2: group by market date, sum spend each day
+, sales_per_day as (
+SELECT market_date
+, sum(sales_value) as total_for_day
+FROM sales_per_customer
+GROUP BY market_date
+)
+
+-- CTE 3: create ranks with window functions
+, best_worst as (
+SELECT *
+, dense_rank() over(ORDER BY total_for_day ASC) as worst_day
+, dense_rank() over(ORDER BY total_for_day DESC) as best_day
+FROM sales_per_day
+)
+
+-- UNION the data together
+SELECT market_date, total_for_day
+FROM best_worst
+WHERE best_day = 1
+
+UNION
+
+SELECT market_date, total_for_day
+FROM best_worst
+WHERE worst_day = 1
