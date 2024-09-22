@@ -57,7 +57,22 @@ Highlight at least two differences between it and your ERD. Would you change any
 Overall, the AdventureWorks schema was quite interesting. It had many more boxes than mine, and likely pursues much more detail about indidividual pieces of information related to the database schema.
 
 1)
-The first major difference
+The first major difference would be the structure of the ERDs. My ERD is quite small, it only has 6-7 tables, whereas the AdventureWorks ERD has many more. However, the interesting difference is the grouping of tables.
+Albeit, my ERD is quite small, so it is difficult to create groupings. However, the AdventureWorks table created an umbrella of groupings with colour codes. All the tables related to production, purchasing, person, sales and human resources are grouped together.
+Within these groups, the relationships between the tables are displayed with the arrows, like a typical ERD. There a few tables in each group which then connect to another table that belongs to an adjacent 'group'.
+Overall, I believe this is a well structured design. It creates smaller, organized groupings of tables to allow for easier understanding of the relationships. Then, relationships between tables in other groups can be identified.
+
+2)
+Another difference noticed in the AdventureWorks ERD to my ERD was the presence of the 'ModifiedDate' in all the tables. This appears to be a variable to track the most recent changes to any of the tables that exist within the database.
+It is likely useful in adding/updating data in tables, moving, renaming or even creating new tables. I also think this is a great structure to have in the database as it guides change management, data quality control and may be useful for other project management goals.
+
+For something I would change in my database, I would definitely implement the grouping system if I were to add more tables. I think keeping a well-structured RDBMS ensures data is easier to retrieve. It will make it easier for users to read and ERD to understand.
+
+I would also like to include a dbo group. The tables involved in this group allow for tracking of the overall system. These tables can provide almost a meta-data overview of changes to the database and other logs that occur.
+This group could be beneficial in tracking errors, change management and people who have accessed the database. This information is vital to quality insurance. Keeping database information in a table like this allows for quick retrieval of this required information. I would use this information to identify who is using the data and ensure it has been used correctly. I would use this table as a key component in other business analytics.
+This would include but is not limited to, reshaping the database, creating new connects, adding/removing tables and checking issues that occured within the database.
+
+Overall, I appreciate the ERD system. Although it does appear to be complex on first sight, with further review of the image, the tables are neatly organized, and the data is well presented. Many of the design principles in the ERD, could aid one that would design a complex database system.
 ```
 
 # Criteria
