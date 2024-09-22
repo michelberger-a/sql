@@ -22,6 +22,10 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 
 _Hint, search type 1 vs type 2 slowly changing dimensions._
 
+Schema architecture for customer_address table. This is for type 1, where the changes overwrite previous records.  
+![image](https://github.com/user-attachments/assets/863de839-5bd0-482b-801c-54b78fea4223)
+
+
 Bonus: Are there privacy implications to this, why or why not?
 ```
 Your answer...
