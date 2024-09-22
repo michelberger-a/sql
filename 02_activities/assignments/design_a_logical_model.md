@@ -22,8 +22,13 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 
 _Hint, search type 1 vs type 2 slowly changing dimensions._
 
+Type 1 Slowly Changing Dimensions: Overwrite  
 Schema architecture for customer_address table. This is for type 1, where the changes overwrite previous records.  
 ![image](https://github.com/user-attachments/assets/863de839-5bd0-482b-801c-54b78fea4223)
+
+Type 2 Slowly Changing Dimensions: Keep Historical Records  
+Schema architecture for customer_address table. This is for type 2, where the changes keep historical records and can compare new edits over time.  
+![image](https://github.com/user-attachments/assets/a66013e8-2698-4015-ad76-77d2199023c6)
 
 
 Bonus: Are there privacy implications to this, why or why not?
