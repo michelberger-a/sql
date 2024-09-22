@@ -26,7 +26,7 @@ Type 1 Slowly Changing Dimensions: Overwrite
 Schema architecture for customer_address table. This is for type 1, where the changes overwrite previous records.  
 ![image](https://github.com/user-attachments/assets/863de839-5bd0-482b-801c-54b78fea4223)
 
-Type 2 Slowly Changing Dimensions: Retain Changes
+Type 2 Slowly Changing Dimensions: Retain Changes  
 Schema architecture for customer_address table. This is for type 2, where the historical changes are kept and can compare older version(s) to the current version.  
 ![image](https://github.com/user-attachments/assets/45807f6d-0be7-41b2-8698-bb54bab56935)
 
@@ -34,7 +34,11 @@ Schema architecture for customer_address table. This is for type 2, where the hi
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+There are privacy implications to including address information for either schema version. As a general statement, including customer address information is another instance of storing personal information, which must follow important laws regarding privacy.
+
+In the type 1, overwrite changes, only one address record is stored per customer. New updates to data will overwrite the historical or previous record and reduces the amount of personal information stored. This may protect customers, where if there is a data breach, less of their personal information is at risk. This is also an efficient manner of storing data, by reducing the total number of records that need to be stored.
+
+In type 2, retain changes, multiple address records may be stored per customer. If a customer has an address change, their previous address will be maintained as a record. Updates to the start date, end date and current flag will indicate when that address was the up-to-date record for the patient. The newest or current record will usually have a recent date for the start date column, either a blank, null or 'improbable' value for the end date, and the current flag will indicate 1 or True. As for privacy implications, this information is riskier to store for customers. More of their data is available and would require more extensive privacy protection to prevent breaches or accidental leaks. With more data available, the risk of storing personal information increases. These sorts of storage methods may be useful for longitudinal studies and other exposure studies to keep track of when customers may have been exposed to a specific risk.  
 ```
 
 ## Question 4
