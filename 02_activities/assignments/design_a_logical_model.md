@@ -26,9 +26,10 @@ Type 1 Slowly Changing Dimensions: Overwrite
 Schema architecture for customer_address table. This is for type 1, where the changes overwrite previous records.  
 ![image](https://github.com/user-attachments/assets/863de839-5bd0-482b-801c-54b78fea4223)
 
-Type 2 Slowly Changing Dimensions: Keep Historical Records  
-Schema architecture for customer_address table. This is for type 2, where the changes keep historical records and can compare new edits over time.  
-![image](https://github.com/user-attachments/assets/a66013e8-2698-4015-ad76-77d2199023c6)
+Type 2 Slowly Changing Dimensions: Retain Changes
+Schema architecture for customer_address table. This is for type 2, where the historical changes are kept and can compare older version(s) to the current version.  
+![image](https://github.com/user-attachments/assets/45807f6d-0be7-41b2-8698-bb54bab56935)
+
 
 
 Bonus: Are there privacy implications to this, why or why not?
